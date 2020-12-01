@@ -1,0 +1,82 @@
+const puppeteer = require('puppeteer');
+const PPTX = require('nodejs-pptx');
+var fs = require('fs');
+var request = require('request');
+
+
+// let pptx = new PPTX.Composer();
+
+// const download = function(uri, filename, callback){
+//     request.head(uri, function(err, res, body){
+//       //console.log('content-type:', res.headers['content-type']);
+//       //console.log('content-length:', res.headers['content-length']);
+  
+//       request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+//     });
+//   };
+
+const GetItems = async(callback) => {
+    const thisMe = this;
+  const browser = await puppeteer.launch({
+      headless: false,
+      defaultViewport: null
+    });
+
+    const page = await browser.newPage();
+
+  await page.goto('https://howtotrainyourdragon.fandom.com/wiki/Night_Fury');
+//   const cookies = [{
+//     'name': 'tracking-opt-in-status',
+//     'value': 'accepted'
+//   },{
+//       'name': 'tracking-opt-in-version',
+//       'value': '4'
+//   },{
+//     'name': 'euconsent-v2',
+//     'value': 'CO9sqsGO9sqsGCNAEAENBCCsAP_AAH_AAAAAGgJB7TrFYSFD-e55dJsgMQxXRsSMAyQiAASBAmABQAKQACQCgkAZhASABAgCIAAAIAJBAAAECAAACUAAQAAAAAEAAAAABQAIAAMAgAIQAAAIAAAAAIEAAAAIgAAAEAABkwgIAIIACAQAhAycAEQVIoCAISxwJJoUgBAAACMABgAQAQAAQIEwAAAACAASAQkgAIAAAAAEAAAAABADIIAAAAAEAAAgAKAAAAAAAAAAAACABAABgAAAAAAAAAAAAABAAAAAAAAAAAAAAMCAAAAAAAQAAAAA.YAAAAAAAAAAA'
+// }];
+  
+//   await page.setCookie(...cookies);
+//   const cookiesSet = await page.cookies('https://howtotrainyourdragon.fandom.com/wiki/Night_Fury');
+//   console.log(JSON.stringify(cookiesSet));
+// await page.evaluate(() => {
+//     document.querySelector('.NN0_TB_DIsNmMHgJWgT7U').click();
+//   });
+
+
+  await page.waitForSelector('.pi-image-thumbnail')
+  .then(() =>page.evaluate(() => {
+      const ItemArray = [];
+      const nitemNodeList = document.querySelectorAll(".pi-image-thumbnail");
+      console.log()
+      request(nitemNodeList[0].getAttribute('src')).pipe(fs.createWriteStream('filename')).on('close', callback);
+    //return nitemNodeList[0].getAttribute('src');
+
+  }))
+  .catch((error) => console.log('Selector Error', error));
+};
+
+
+
+const imageFile = GetItems(function(err, wowUsage){
+    console.log(err, wowUsage)
+});
+console.log(imageFile)
+
+// download(nitemNodeList[0].getAttribute('src'), 'google.png', function(){
+//     console.log('done');
+//   });
+
+// pptx.compose(pres => {
+//     pres.addSlide(slide => {
+//       slide.addImage(image => {
+//         image
+//           .file(imageFile)
+//           .x(500)
+//           .y(100)
+//           .cx(166)
+//           .cy(100);
+//       })
+//     });
+//   });
+//    pptx.save(`./hello-world.pptx`);
