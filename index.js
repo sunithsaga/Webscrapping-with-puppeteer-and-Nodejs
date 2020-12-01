@@ -34,7 +34,6 @@ const download = (url, path, callback) => {
 };
 
 GetImageCallback = function(res, name){
-        console.log(res);
         download(res, `./images/${name}.png`, ()=>{
             pptx.compose(pres => {
                 pres.addSlide(slide => {
