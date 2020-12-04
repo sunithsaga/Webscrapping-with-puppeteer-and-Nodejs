@@ -6,9 +6,9 @@ This code will allow to scrap the content from the another website and paste/pla
 This code will use puppeteer (headless chromium browser) which will help in run the website and nodejs-pptx for creating the PPTX with NodeJs.
 
 
-Steps1 
+<b>Steps 1 </b>
 
-After done with npm install, add below code
+After done with npm install, add below code. <br />
 <code>
 const puppeteer = require("puppeteer");
 var PPTX = require("nodejs-pptx");
@@ -16,5 +16,11 @@ var fs = require("fs");
 var request = require("request");
 var pptx = new PPTX.Composer();
 </code>
+
+Step 2
+
+Create a async method which will check the content in website using html path which can be checked using native javascript. <code>document.querySelectorAll</code> 
+
+
 
 
